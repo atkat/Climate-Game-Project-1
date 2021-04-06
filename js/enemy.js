@@ -2,32 +2,36 @@ class Enemy {
     constructor(image) {
         this.image = image;
         // the coins should appear on the right side of the canvas
+        this.width = 150;
+        this.height = 150;
         this.x = width;
-        this.y = 0;
-        this.width = 50;
-        this.height = 50;
+        this.y = height - this.height;  
     }
 
-    collision(playerInfo) {
-        //console.log('collision', playerInfo);
+    collision(playerObj) {
+        //console.log('collision', playerObj);
         const enemyX = this.x + this.width / 2
         const enemyY = this.y + this.height / 2
 
-        const playerX = playerInfo.x + playerInfo.width / 2;
-        const playerY = playerInfo.y + playerInfo.height / 2;
+        const playerX = playerObj.x + playerObj.width / 2;
+        const playerY = playerObj.y + playerObj.height / 2;
         // then use the p5 function dist() to calculate the distance
-        if (dist(enemyX, enemyY, playerX, playerY) > 60) {
-            // !!!  I can add DOM for coloud change !!!
-            return false;
-        } else {
-            // we have a collision
-            game.player.score += 10;
+        if (dist(enemyX, enemyY, playerX, playerY) < 50 && playerObj.go() )  {
+            // we have a collision // !!!  I can add DOM for colour change !!!
+            game.player.score += 20;
+           // this.crash.play()
             return true;
+        } else {
+            return false;
         }
     }
 
     draw() {
+        console.log("this is enemy: ", this.image)
         this.x--;
         image(this.image, this.x, this.y, this.width, this.height);
+        if (this.x < 0) {
+            game.player.score -= 20
+        }
     }
 }

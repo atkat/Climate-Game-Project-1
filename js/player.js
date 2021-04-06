@@ -30,58 +30,58 @@ class Player {
             this.x = width - this.width;
         }
 
-        console.log(game.playerImage)
-       // image(game.token2Image, this.x, this.y, 100, 100) //test 
-
         image(game.playerImage, this.x, this.y, this.width, this.height);
         
-        // moving different directions on keyDowns
+        // moving different directions on keyDowns ???
         this.go(keyCode);
 
+        //score
+        this.scoreStr = "Score: " + this.score;
+        textSize(32);
+        textFont('Helvetica')
+        text(this.scoreStr, 20, 20, 300, 300);
+        fill('#21435F');   
+        textStyle(BOLD);
     }
-        
+
     jump() {
-        this.velocity = -13;
+        //on keyPress
+        this.velocity = -15;
     }
 
     // downwards is always accelerated -> this one is for keyPress
-            // IS LAND ALSO ATTACK?
     land() {
         console.log('player downwards');
         this.velocity += 20;  
     }
 
-    go(keyCode) {
+    go(keyCode) { //moving and attacking
         //left
-        if (keyIsDown(37)) {    //&& this.x > 0
+        if (keyIsDown(37) && game.enemies.length >= 0) {    //&& this.x > 0
+            this.x -= 1.5*this.speed; 
+            return true;
+        }
+        if (keyIsDown(37)) {    
             this.x -= this.speed; 
-        }
+        } 
         //right
-        if (keyIsDown(39) ) {     // && this.x > >= width - this.width
-            this.x += this.speed; 
+        if (keyIsDown(39) && game.enemies.length >= 0) {    //&& this.x > 0
+            this.x += 1.5*this.speed; 
+            return true
         }
-        // downwards is always accelerated -> this one is for keyDress
+        if (keyIsDown(39)) {     // && this.x > >= width - this.width
+            this.x += this.speed; 
+            console.log(this.x)
+        }
+        // down 
+        if (keyIsDown(40) && game.enemies.length >= 0) {    //&& this.x > 0
+            this.y += 1.5*this.speed; 
+            return true
+        }
         if (keyIsDown(40)) {
             this.y += this.speed; 
         }
-        // maybe upwards too
-            // if (keyIsDown(38)) {
-            //     this.y -= this.speed; 
-            //     console.log('player fly');
-            // }
-    }
 
-//     attack (keyCode) {
-//     // accelerate left, right or down to attack
-//             if () {
-//                 this.x -= this.speed; 
-//             }
-//             if () {
-//                 this.x += this.speed; 
-//             }
-//             if () {
-//                 this.y += this.speed; 
-//             }
+    }   
     
-
 }

@@ -1,2 +1,3 @@
 Factory image credit: 
-<a href="https://www.vecteezy.com/free-vector/vector">Vector Vectors by Vecteezy</a>
+https://pngtree.com/so/factory
+https://pngtree.com/so/factory
