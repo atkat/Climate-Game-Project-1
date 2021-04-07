@@ -45,7 +45,6 @@ class Game {
         this.enemyImagesPaths = [
             'assets/obstacles/factory-detailed.png', 
             'assets/obstacles/factory-abstract.png',
-            //'assets/obstacles/factory-simple.png',
             'assets/obstacles/factory-colour.png',
             'assets/obstacles/factory1.png'
         ]
@@ -56,6 +55,7 @@ class Game {
         this.crash = loadSound('assets/sounds/explosion.wav');
         this.plop = loadSound('assets/sounds/plop.wav');
         this.gameOverSound = loadSound('assets/sounds/gameover.wav');
+        this.gameOverSound.loop = false; 
     }
 
     setup() {
@@ -64,16 +64,21 @@ class Game {
         this.tokens = [];
         this.activeEnemies = [];
         this.activeTrees = [];
+       
     }
 
     draw() {
-        //this.soundtrack.play();
+        if (!this.soundtrack.isPlaying() ) {
+          // this.soundtrack.loop = false; 
+           this.soundtrack.play() } 
+        this.end();
         clear();
         this.background.draw();
         this.gameProgress();
+        //to make the trees appear behind the first layer
         this.showTreeLayer();
         this.player.draw();
-        this.end();
+        
         //tokens
         if (frameCount % 300 === 0) {
             Math.random() < 0.5 ? 
@@ -115,14 +120,7 @@ class Game {
             let randomTree = Math.floor(Math.random() * this.treeImages.length)
             this.treeImage = this.treeImages[randomTree]; 
              this.activeTrees.push(new Tree(this.treeImage));
-            // this.activeTrees = [];
-            // for (let i=0; i<treesWon; i++){
-            //     
-            //     //trees currently on screen
-            //     this.activeTrees.push(new Tree(this.treeImage));
-            // }
         }
-        //console.log(this.activeTrees)
         this.activeTrees.forEach(tree => tree.draw() );
        
         //removeClouds
@@ -139,12 +137,18 @@ class Game {
 
         //add skeletons
         //add clouds?
-       
     }
 
-     end () {
-        if (this.player.score < -40) {
-            //game.gameOverSound.play();
+    end () {
+        if (this.player.score > 20) {
+            if (this.soundtrack.isPlaying())
+                {this.soundtrack.pause();
+            }
+            if (!this.gameOverSound.isPlaying()) {
+                //this.gameOverSound.loop = false;
+                this.gameOverSound.play();
+            } else { this.gameOverSound.pause() }
+
             this.tokens = [];
             this.activeEnemies = [];
             this.activeTrees = [];
@@ -155,7 +159,7 @@ class Game {
             text("Game Over",0, 0, 1000, 500);
             textSize(12);
             textAlign(CENTER,CENTER);
-            text("Press 'R' to play again.",0, 0, 1000, 600);
+            text("Refresh to play again.",0, 0, 1000, 600);
         }
         if (this.player.score >= 300) {
             this.tokens = [];
@@ -168,11 +172,11 @@ class Game {
             textSize(12);
             fill('#283747'); 
             textAlign(CENTER,CENTER);
-            text("Press 'R' to play again.", 0, 0, 1000, 600);
+            text("Refresh to play again.", 0, 0, 1000, 600);
             fill('#283747');
         }
      }
-
+    
     showTreeLayer () {
         image(this.treeLayer.src, this.treeLayer.x, this.treeLayer.y, width, height)
         this.treeLayer.x -= this.treeLayer.speed
