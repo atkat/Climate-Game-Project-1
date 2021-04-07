@@ -10,6 +10,7 @@ class Game {
     this.plop;
     this.crash;
     this.gameOverSound;
+    this.gameOverSoundCounter = 0;
     }
 
     preload () {
@@ -41,7 +42,7 @@ class Game {
         this.playerImage = loadImage('assets/player/yorek.png');
         this.token1Image = loadImage('assets/obstacles/turbine.gif');
         this.token2Image = loadImage('assets/obstacles/solar-panel.png');
-        
+        //enemies
         this.enemyImagesPaths = [
             'assets/obstacles/factory-detailed.png', 
             'assets/obstacles/factory-abstract.png',
@@ -51,7 +52,7 @@ class Game {
         this.enemyImages = this.enemyImagesPaths.map(a=>loadImage(a));
         
         //sounds
-        this.soundtrack = loadSound('assets/sounds/game-music.mp3');
+        this.soundtrack = loadSound('assets/sounds/skulls_adventure.mp3');
         this.crash = loadSound('assets/sounds/explosion.wav');
         this.plop = loadSound('assets/sounds/plop.wav');
         this.gameOverSound = loadSound('assets/sounds/gameover.wav');
@@ -64,7 +65,6 @@ class Game {
         this.tokens = [];
         this.activeEnemies = [];
         this.activeTrees = [];
-       
     }
 
     draw() {
@@ -144,14 +144,12 @@ class Game {
             if (this.soundtrack.isPlaying())
                 {this.soundtrack.pause();
             }
-            if (!this.gameOverSound.isPlaying()) {
+            if (this.gameOverSoundCounter === 0) {
                 //this.gameOverSound.loop = false;
                 this.gameOverSound.play();
-            } else { this.gameOverSound.pause() }
-
-            this.tokens = [];
-            this.activeEnemies = [];
-            this.activeTrees = [];
+                this.gameOverSoundCounter++
+            } //else { this.gameOverSound.pause() }
+          
             background('black')
             textSize(50);
             fill('pink'); 
@@ -160,6 +158,11 @@ class Game {
             textSize(12);
             textAlign(CENTER,CENTER);
             text("Refresh to play again.",0, 0, 1000, 600);
+
+            this.tokens = [];
+            this.activeEnemies = [];
+            this.activeTrees = [];
+            
         }
         if (this.player.score >= 300) {
             this.tokens = [];
