@@ -7,17 +7,24 @@ class Game {
     this.token2Image;
     this.enemyImages;
     this.soundtrack;
+    this.plop;
     this.crash;
+    this.gameOverSound;
     }
 
     preload () {
         this.backgroundImages = [
             { src: loadImage('assets/background/sky_background.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
-            { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0 },
+            { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
+            { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.25 },
+            { src: loadImage('assets/background/clouds.png'), x: 400, speed: 0.05 },
+            { src: loadImage('assets/background/clouds2.png'), x: 300, speed: 0.75 },
+            { src: loadImage('assets/background/clouds.png'), x: 300, speed: 0.1 },
+            { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0.2 },
             { src: loadImage('assets/background/mountains.png'), x: 0, speed: 0.5},
             { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
-            { src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
+            //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
         ]
         this.decorationImages = [ 
             {src: loadImage('assets/background/skeleton.png'), x: 1000, y: 320, speed: 1, width: 50, height: 60 },
@@ -25,13 +32,12 @@ class Game {
         ]
 
         this.treeImages = [ 
-            {src: loadImage('assets/obstacles/Sprite_01.png'), y: 200, speed: 1 },
-            {src: loadImage('assets/obstacles/Sprite_02.png'), y: 220, speed: 1.5},
-            {src: loadImage('assets/obstacles/Sprite_03.png'), y: 240, speed: 1 },
-            {src: loadImage('assets/obstacles/Sprite_04.png'), y: 260, speed: 1 },
-            {src: loadImage('assets/obstacles/Sprite_05.png'), y: 180, speed: 1 }, 
+             {src: loadImage('assets/obstacles/chestnut-001.png'), y: 300, speed: 0.7 },
+             {src: loadImage('assets/obstacles/chestnut-002.png'), y: 260, speed: 1 },
+             {src: loadImage('assets/obstacles/trreez.png'), y: 380, speed: 0.7 },
+             {src: loadImage('assets/obstacles/trreez.png'), y: 330, speed: 1 }
         ]
-
+        this.treeLayer = {src: loadImage('assets/background/layer2.png'), x: 0, y:0, speed: 1.5 };
         this.playerImage = loadImage('assets/player/yorek.png');
         this.token1Image = loadImage('assets/obstacles/turbine.gif');
         this.token2Image = loadImage('assets/obstacles/solar-panel.png');
@@ -39,19 +45,22 @@ class Game {
         this.enemyImagesPaths = [
             'assets/obstacles/factory-detailed.png', 
             'assets/obstacles/factory-abstract.png',
-            'assets/obstacles/factory-simple.png'
+            //'assets/obstacles/factory-simple.png',
+            'assets/obstacles/factory-colour.png',
+            'assets/obstacles/factory1.png'
         ]
         this.enemyImages = this.enemyImagesPaths.map(a=>loadImage(a));
         
         //sounds
-        //this.soundtrack = loadSound('assets/sounds/game-music.mp3');
+        this.soundtrack = loadSound('assets/sounds/game-music.mp3');
         this.crash = loadSound('assets/sounds/explosion.wav');
+        this.plop = loadSound('assets/sounds/plop.wav');
+        this.gameOverSound = loadSound('assets/sounds/gameover.wav');
     }
 
     setup() {
         this.player = new Player();
         this.background = new Background();
-        this.end = new End();
         this.tokens = [];
         this.activeEnemies = [];
         this.activeTrees = [];
@@ -61,15 +70,10 @@ class Game {
         //this.soundtrack.play();
         clear();
         this.background.draw();
+        this.gameProgress();
+        this.showTreeLayer();
         this.player.draw();
-        // endscreen:
-        if (this.player.score < 0 || this.player.score >= 20) {
-            this.end.draw();
-            this.tokens = [];
-            this.activeEnemies = [];
-            this.activeTrees = [];
-        }
-
+        this.end();
         //tokens
         if (frameCount % 300 === 0) {
             Math.random() < 0.5 ? 
@@ -99,24 +103,83 @@ class Game {
             if(enemy.x < 0 || enemy.collision(this.player)) 
              { return false 
              } else {return true}
-        })
+        })   
+    } 
 
+    gameProgress () {
         // background change based on score
-        if (game.player.score > 20 && frameCount % 200 === 0) {
-            let randomTreeIndex = Math.floor(Math.random() * this.treeImages.length)
-            this.treeImage = this.treeImages[randomTreeIndex]; 
-            //trees currently on screen
-            this.activeTrees.push(new Tree(this.treeImage))
+        //add trees
+        //clear();
+        let treesWon = Math.floor(game.player.score/30)
+        if (this.activeTrees.length<treesWon) {
+            let randomTree = Math.floor(Math.random() * this.treeImages.length)
+            this.treeImage = this.treeImages[randomTree]; 
+             this.activeTrees.push(new Tree(this.treeImage));
+            // this.activeTrees = [];
+            // for (let i=0; i<treesWon; i++){
+            //     
+            //     //trees currently on screen
+            //     this.activeTrees.push(new Tree(this.treeImage));
+            // }
         }
+        //console.log(this.activeTrees)
         this.activeTrees.forEach(tree => tree.draw() );
-        // this.activeTrees = this.activeTrees.filter( tree => {
-        //     if(tree.x < 0 || game.score<50) 
+       
+        //removeClouds
+        // if (game.player.score > 100) {
+            
+        // }
+        //remove stuff when score drops
+        //removeTrees
+        //  this.activeTrees = this.activeTrees.filter( tree => {
+        //     if(this.player.score < 70) 
         //      { return false 
         //      } else {return true}
         // })
+
+        //add skeletons
+        //add clouds?
        
-        
-    } 
+    }
 
+     end () {
+        if (this.player.score < -40) {
+            //game.gameOverSound.play();
+            this.tokens = [];
+            this.activeEnemies = [];
+            this.activeTrees = [];
+            background('black')
+            textSize(50);
+            fill('pink'); 
+            textAlign(CENTER, CENTER);
+            text("Game Over",0, 0, 1000, 500);
+            textSize(12);
+            textAlign(CENTER,CENTER);
+            text("Press 'R' to play again.",0, 0, 1000, 600);
+        }
+        if (this.player.score >= 300) {
+            this.tokens = [];
+            this.activeEnemies = [];
+            this.activeTrees = [];
+            background('pink')
+            textSize(50);
+            textAlign(CENTER, CENTER);
+            text("You've saved us", 0, 0, 1000, 500);
+            textSize(12);
+            fill('#283747'); 
+            textAlign(CENTER,CENTER);
+            text("Press 'R' to play again.", 0, 0, 1000, 600);
+            fill('#283747');
+        }
+     }
+
+    showTreeLayer () {
+        image(this.treeLayer.src, this.treeLayer.x, this.treeLayer.y, width, height)
+        this.treeLayer.x -= this.treeLayer.speed
+        image(this.treeLayer.src, this.treeLayer.x +width, this.treeLayer.y, width, height)
+        if (this.treeLayer.x <= - width) {
+            this.treeLayer.x = 0;
+        }
+
+    }
 }
-

@@ -18,8 +18,9 @@ class Enemy {
         // then use the p5 function dist() to calculate the distance
         if (dist(enemyX, enemyY, playerX, playerY) < 70 && playerObj.go() )  {
             // we have a collision // !!!  I can add DOM for colour change !!!
-            game.player.score += 20;
-            game.crash.play()
+            game.player.score += 30;
+            game.crash.setVolume(0.3);
+            game.crash.play();
             return true;
         } else {
             return false;
@@ -27,11 +28,10 @@ class Enemy {
     }
 
     draw() {
-        //console.log("this is enemy: ", this.image)
         this.x--;
         image(this.image, this.x, this.y, this.width, this.height);
         if (this.x < 0) {
-            game.player.score -= 20
+            game.player.score -= 30
         }
     }
 }

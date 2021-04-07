@@ -20,9 +20,9 @@ class Token {
             return false;
         } else {
             // we have a collision
-            game.player.score += 10;
+            game.plop.play();
+            game.player.score += 15;
             return true;
-            console.log('boom')
         }
     }
 
