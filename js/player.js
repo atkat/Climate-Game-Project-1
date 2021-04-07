@@ -2,10 +2,11 @@ class Player {
 
     constructor() {
         this.score = 0;
-        this.gravity = 0.3;
-        this.velocity = 2;
+        this.gravity = 0.35;
+        this.velocity = 3;
         this.speed = 20;
-        this.width = 100;
+        this.acceleration = 20;
+        this.width = 160;
         this.height = 140;
         this.x = 0;
         // height of the canvas - height of the player
@@ -32,15 +33,16 @@ class Player {
 
         image(game.playerImage, this.x, this.y, this.width, this.height);
         
-        // moving different directions on keyDowns ???
-        this.go(keyCode);
+        // moving different directions on keyDowns  !!! Happemns on every draw()
+        //can be wriiten into game.draw()
+        this.go(keyCode); 
 
         //score
         this.scoreStr = "Score: " + this.score;
-        textSize(32);
+        textSize(40);
         textFont('Helvetica')
-        text(this.scoreStr, 20, 20, 300, 300);
-        fill('#21435F');   
+        text(this.scoreStr, 10, 25, 300, 300);
+        fill('#283747');   
         textStyle(BOLD);
     }
 
@@ -51,30 +53,28 @@ class Player {
 
     // downwards is always accelerated -> this one is for keyPress
     land() {
-        console.log('player downwards');
         this.velocity += 20;  
     }
 
     go(keyCode) { //moving and attacking
         //left
-        if (keyIsDown(37) && game.enemies.length >= 0) {    //&& this.x > 0
-            this.x -= 1.5*this.speed; 
-            return true;
-        }
+        // if (keyIsDown(37) && game.activeEnemies.length >= 0) {    //&& this.x > 0
+        //     this.x -= 1.5*this.speed; 
+        //     return true;
+        // }
         if (keyIsDown(37)) {    
             this.x -= this.speed; 
         } 
         //right
-        if (keyIsDown(39) && game.enemies.length >= 0) {    //&& this.x > 0
-            this.x += 1.5*this.speed; 
-            return true
-        }
+        // if (keyIsDown(39) && game.activeEnemies.length >= 0) {    //&& this.x > 0
+        //     this.x += 1.5*this.speed; 
+        //     return true
+        // }
         if (keyIsDown(39)) {     // && this.x > >= width - this.width
             this.x += this.speed; 
-            console.log(this.x)
         }
         // down 
-        if (keyIsDown(40) && game.enemies.length >= 0) {    //&& this.x > 0
+        if (keyIsDown(40) && game.activeEnemies.length >= 0) {    //&& this.x > 0
             this.y += 1.5*this.speed; 
             return true
         }

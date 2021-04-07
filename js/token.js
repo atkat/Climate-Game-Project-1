@@ -16,7 +16,7 @@ class Token {
         const playerX = playerInfo.x + playerInfo.width / 2;
         const playerY = playerInfo.y + playerInfo.height / 2;
         // then use the p5 function dist() to calculate the distance
-        if (dist(tokenX, tokenY, playerX, playerY) > 60) {
+        if (dist(tokenX, tokenY, playerX, playerY) > 70) {
             return false;
         } else {
             // we have a collision

@@ -1,6 +1,7 @@
 class Game {
-    constructor() {
+    constructor() {      //?
     this.backgroundImages;
+    this.decorationImages;
     this.playerImage;
     this.token1Image;
     this.token2Image;
@@ -14,33 +15,46 @@ class Game {
             { src: loadImage('assets/background/sky_background.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0 },
-            { src: loadImage('assets/background/layer4.png'), x: 0, speed: 1 },
-            { src: loadImage('assets/background/layer3.png'), x: 0, speed: 2 }
+            { src: loadImage('assets/background/mountains.png'), x: 0, speed: 0.5},
+            { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
+            { src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
         ]
-        this.playerImage = loadImage('assets/player/bb8.gif');
-        this.token1Image = loadImage('assets/obstacles/turbine2.gif');
+        this.decorationImages = [ 
+            {src: loadImage('assets/background/skeleton.png'), x: 1000, y: 320, speed: 1, width: 50, height: 60 },
+            {src: loadImage('assets/background/animal-skeleton.png'), x: 1000, y: 550, speed: 1.2,  width: 60, height: 20} 
+        ]
+
+        this.treeImages = [ 
+            {src: loadImage('assets/obstacles/Sprite_01.png'), y: 200, speed: 1 },
+            {src: loadImage('assets/obstacles/Sprite_02.png'), y: 220, speed: 1.5},
+            {src: loadImage('assets/obstacles/Sprite_03.png'), y: 240, speed: 1 },
+            {src: loadImage('assets/obstacles/Sprite_04.png'), y: 260, speed: 1 },
+            {src: loadImage('assets/obstacles/Sprite_05.png'), y: 180, speed: 1 }, 
+        ]
+
+        this.playerImage = loadImage('assets/player/yorek.png');
+        this.token1Image = loadImage('assets/obstacles/turbine.gif');
         this.token2Image = loadImage('assets/obstacles/solar-panel.png');
         
-
         this.enemyImagesPaths = [
             'assets/obstacles/factory-detailed.png', 
             'assets/obstacles/factory-abstract.png',
             'assets/obstacles/factory-simple.png'
         ]
-
         this.enemyImages = this.enemyImagesPaths.map(a=>loadImage(a));
         
         //sounds
-        //this.soundtrack = loadSound('assets/sounds/game-music.mp3')
-        //this.crash = loadSound('explosion.wav')
+        //this.soundtrack = loadSound('assets/sounds/game-music.mp3');
+        this.crash = loadSound('assets/sounds/explosion.wav');
     }
 
     setup() {
         this.player = new Player();
         this.background = new Background();
+        this.end = new End();
         this.tokens = [];
         this.activeEnemies = [];
-       // this.soundtrack.play()
+        this.activeTrees = [];
     }
 
     draw() {
@@ -48,6 +62,14 @@ class Game {
         clear();
         this.background.draw();
         this.player.draw();
+        // endscreen:
+        if (this.player.score < 0 || this.player.score >= 20) {
+            this.end.draw();
+            this.tokens = [];
+            this.activeEnemies = [];
+            this.activeTrees = [];
+        }
+
         //tokens
         if (frameCount % 300 === 0) {
             Math.random() < 0.5 ? 
@@ -55,28 +77,43 @@ class Game {
                 : this.tokens.push(new Token(this.token2Image));  
         }
         this.tokens.forEach(token => token.draw() ); 
-        //enemies
-        if (frameCount % 200 === 0) {
-            //random enemy
-            let random = Math.floor(Math.random() * this.enemyImages.length)
-            this.enemyImage = this.enemyImages[random]; 
-            //enemies currently on screen
-            this.activeEnemies.push(new Enemy(this.enemyImage)); 
-        }
-        this.activeEnemies.forEach(enemy => enemy.draw() );
-
         //collecting tokens or tokens running off the screen
         this.tokens = this.tokens.filter( token => {
             if(token.x < 0 || token.collision(this.player)) 
              { return false 
              } else { return true}
         })
+
+        //enemies
+        if (frameCount % 300 === 0) {
+            //random enemy (I could do this in enemy class)
+            let randomEnemyIndex = Math.floor(Math.random() * this.enemyImages.length)
+            this.enemyImage = this.enemyImages[randomEnemyIndex]; 
+            //enemies currently on screen
+            this.activeEnemies.push(new Enemy(this.enemyImage)); 
+        }
+        this.activeEnemies.forEach(enemy => enemy.draw() );
+
          //destroying enemies or enemies running off the screen
         this.activeEnemies = this.activeEnemies.filter( enemy => {
             if(enemy.x < 0 || enemy.collision(this.player)) 
              { return false 
              } else {return true}
         })
+
+        // background change based on score
+        if (game.player.score > 20 && frameCount % 200 === 0) {
+            let randomTreeIndex = Math.floor(Math.random() * this.treeImages.length)
+            this.treeImage = this.treeImages[randomTreeIndex]; 
+            //trees currently on screen
+            this.activeTrees.push(new Tree(this.treeImage))
+        }
+        this.activeTrees.forEach(tree => tree.draw() );
+        // this.activeTrees = this.activeTrees.filter( tree => {
+        //     if(tree.x < 0 || game.score<50) 
+        //      { return false 
+        //      } else {return true}
+        // })
        
         
     } 
