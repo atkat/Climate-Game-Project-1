@@ -17,12 +17,10 @@ class Game {
     this.mode = 0;
     this.beforeHundred;
     this.afterHundred;
-
     }
 
     preload () {
         this.backgroundImages = [];
-
         this.beforeHundred = [
             { src: loadImage('assets/background/sky_background.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
@@ -36,15 +34,13 @@ class Game {
             { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
             //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
         ]
-
         this.afterHundred = [
             { src: loadImage('assets/background/blueskies.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
-            { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
-            { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.05 },
+            { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.25 },
+            { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.50 },
             { src: loadImage('assets/background/mountains.png'), x: 0, speed: 0.5},
             { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
-            //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
         ]
 
         this.decorationImages = [ 
@@ -87,7 +83,6 @@ class Game {
         this.activeEnemies = [];
         this.activeTrees = [];
         this.backgroundImages = this.beforeHundred;
-
     }
 
     draw() {
@@ -114,7 +109,6 @@ class Game {
              { return false 
              } else { return true}
         })
-
         //enemies
         if (frameCount % 260 === 0) {
             //random enemy (I could do this in enemy class)
@@ -133,7 +127,7 @@ class Game {
     } 
     gameProgress () {
         // background change based on score
-        //add trees
+        //add and remove trees
         let treesWon = Math.floor(game.player.score/30)
         if (this.activeTrees.length<treesWon) {
             let randomTree = Math.floor(Math.random() * this.treeImages.length)
@@ -146,19 +140,21 @@ class Game {
             this.activeTrees.pop();
         }
         this.activeTrees.forEach(tree => tree.draw() );
-        //add blue sky
+        //change to blue sky
         this.player.score >100 ?  this.backgroundImages = this.afterHundred : this.backgroundImages = this.beforeHundred
-            
-        
-       
     }
 
     end () {
       
         if (this.player.score < -40) {
+            noLoop();
             if (this.soundtrack.isPlaying()) {
                 this.soundtrack.stop();
             }
+            this.activeTrees = [];
+            this.activeEnemies = [];
+            this.tokens =[];
+
             if (this.gameOverSoundCounter === 0) {
                 //this.gameOverSound.loop = false;
                 this.gameOverSound.play();
@@ -173,15 +169,16 @@ class Game {
             textAlign(CENTER,CENTER);
             text("Refresh   to   play   again.",0, 0, 1000, 600);
 
-            this.tokens = [];
-            this.activeEnemies = [];
-            this.activeTrees = [];
-            
         }
-        if (this.player.score >= 300) {
+        if (this.player.score >= 140) {
             if (this.soundtrack.isPlaying()) {
                 this.soundtrack.stop();
             }
+            noLoop();
+            this.activeTrees = [];
+            this.activeEnemies = [];
+            this.tokens =[];
+
             if (this.gameOverSoundCounter === 0) {
                 //this.gameOverSound.loop = false;
                 this.winSound.play();
@@ -216,18 +213,7 @@ class Game {
 
 }
 
- //removeClouds
-        // let cloudCount = Math.floor(game.player.score/100)
-        // if (this.clouds.length>cloudCount) {
-        //     let randomCloud = Math.floor(Math.random() * this.clouds.length)
-        //     this.cloudImage = this.treeImages[randomCloud]; 
-        //     this.clouds.pop();
-        // }
-
-        //
-
-        //add skeletons
-        //add clouds?
+ 
 
 // obstacles() {
 //     //enemies

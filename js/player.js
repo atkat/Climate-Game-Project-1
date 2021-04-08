@@ -39,9 +39,9 @@ class Player {
 
         //score
         this.scoreStr = "SCORE:  " + this.score;
-        textSize(55);
+        textSize(52);
         textFont('ConnectionBold-ER1g')
-        text(this.scoreStr, 10, 25, 300, 300);
+        text(this.scoreStr, 10, 25, 300, 350);
         fill('#172D42');   
         textStyle(BOLD);
     }

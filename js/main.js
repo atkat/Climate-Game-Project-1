@@ -10,11 +10,9 @@ function preload() {
 
 function setup() {
     mode = 0;
-   createCanvas(1000, 600);
-   
+    createCanvas(1000, 600);
     game.setup();
 }
-
 
 function draw() {
     //document.getElementById('loading').style.display = "block";
