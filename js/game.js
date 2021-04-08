@@ -205,10 +205,7 @@ class Game {
                 this.winSound.play();
                 this.gameOverSoundCounter++
             } //else { this.gameOverSound.pause() }
-            this.tokens = [];
-            this.activeEnemies = [];
-            this.activeTrees = [];
-            this.activeOil =[];
+        
             
             background('pink')
             textFont('Connection-arMJ')
