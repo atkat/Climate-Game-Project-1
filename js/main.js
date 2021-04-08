@@ -51,6 +51,8 @@ function draw() {
     }
     if (mode === 1) { 
         game.draw();
+        if (introSound.isPlaying() ) {
+            introSound.stop() } 
     }
 }
 

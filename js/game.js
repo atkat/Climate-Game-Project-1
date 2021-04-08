@@ -73,8 +73,7 @@ class Game {
         this.plop = loadSound('assets/sounds/plop.wav');
         this.gameOverSound = loadSound('assets/sounds/gameover.wav');
         this.winSound = loadSound('assets/sounds/win.wav');
-        
-        //this.gameOverSound.loop = false; 
+    
     }
 
     setup() {
