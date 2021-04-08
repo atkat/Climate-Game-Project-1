@@ -69,6 +69,9 @@ class Player {
             this.y += 1.5*this.speed; 
             return true
         }
+        if (keyIsDown(38) || keyIsDown(87)) {
+            this.y += -20;
+        }
         if (keyIsDown(40)) {
             this.y += this.speed; 
         }

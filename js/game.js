@@ -159,7 +159,7 @@ class Game {
         }
         this.activeTrees.forEach(tree => tree.draw() );
         //change to blue sky
-        this.player.score >100 ?  this.backgroundImages = this.afterHundred : this.backgroundImages = this.beforeHundred
+        this.player.score >150 ?  this.backgroundImages = this.afterHundred : this.backgroundImages = this.beforeHundred
     }
 
     end () {
@@ -172,6 +172,7 @@ class Game {
             this.activeTrees = [];
             this.activeEnemies = [];
             this.tokens =[];
+            this.activeOil =[];
 
             if (this.gameOverSoundCounter === 0) {
                 //this.gameOverSound.loop = false;
@@ -179,6 +180,7 @@ class Game {
                 this.gameOverSoundCounter++
             } //else { this.gameOverSound.pause() }
             background('black')
+            textFont('Connection-arMJ')
             textSize(50);
             fill('pink'); 
             textAlign(CENTER, CENTER);
@@ -196,6 +198,7 @@ class Game {
             this.activeTrees = [];
             this.activeEnemies = [];
             this.tokens =[];
+            this.activeOil =[];
 
             if (this.gameOverSoundCounter === 0) {
                 //this.gameOverSound.loop = false;
@@ -207,13 +210,14 @@ class Game {
             this.activeTrees = [];
             
             background('pink')
+            textFont('Connection-arMJ')
             textSize(50);
             fill('#283747'); 
             textAlign(CENTER, CENTER);
-            text("You've   saved   us", 0, 0, 1000, 450);
+            text("You've saved us!\n🥳", 0, 0, 1000, 450);
             textSize(20);
             textAlign(CENTER,CENTER);
-            text("Refresh   to   play   again.", 0, 0, 1000, 600);
+            text("Refresh to play again.", 0, 0, 1000, 650);
             fill('#283747');
         }
      }
@@ -225,6 +229,9 @@ class Game {
         if (this.treeLayer.x <= - width)  this.treeLayer.x = 0;
     }
 
+    //refactoring fail:
+    // obstacles() {}
+
     // offScreen(arr) {
     //     arr = arr.filter( item => {
     //         if(item.x < 0 || item.collision(this.player)) 
@@ -233,10 +240,7 @@ class Game {
     //     })   
     // }
 }
-    // obstacles () {
-    //   //  tokens
-       
-    // }
+    
 
     
     
