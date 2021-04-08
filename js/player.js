@@ -2,7 +2,7 @@ class Player {
 
     constructor() {
         this.score = 0;
-        this.gravity = 0.35;
+        this.gravity = 0.75;
         this.velocity = 4;
         this.speed = 20;
         this.acceleration = 20;

@@ -73,7 +73,8 @@ class Game {
         this.plop = loadSound('assets/sounds/plop.wav');
         this.gameOverSound = loadSound('assets/sounds/gameover.wav');
         this.winSound = loadSound('assets/sounds/win.wav');
-        this.gameOverSound.loop = false; 
+        
+        //this.gameOverSound.loop = false; 
     }
 
     setup() {
@@ -96,21 +97,22 @@ class Game {
         this.player.draw();
         this.end();   
 
-        //tokens
         if (frameCount % 150 === 0) {
             Math.random() < 0.5 ? 
                 this.tokens.push(new Token(this.token1Image))
                 : this.tokens.push(new Token(this.token2Image));  
         }
         this.tokens.forEach(token => token.draw() ); 
-        //collecting tokens or tokens running off the screen
+        //collecting or tokens running off the screen
+        //this.offScreen(this.tokens);
         this.tokens = this.tokens.filter( token => {
             if(token.x < 0 || token.collision(this.player)) 
              { return false 
              } else { return true}
         })
+
         //enemies
-        if (frameCount % 260 === 0) {
+        if (frameCount % 230 === 0) {
             //random enemy (I could do this in enemy class)
             let randomEnemyIndex = Math.floor(Math.random() * this.enemyImages.length)
             this.enemyImage = this.enemyImages[randomEnemyIndex]; 
@@ -118,12 +120,14 @@ class Game {
             this.activeEnemies.push(new Enemy(this.enemyImage)); 
         }
         this.activeEnemies.forEach(enemy => enemy.draw() );
-         //destroying enemies or enemies running off the screen
+         //collisions or enemies running off the screen
+        //this.offScreen(this.activeEnemies)
         this.activeEnemies = this.activeEnemies.filter( enemy => {
             if(enemy.x < 0 || enemy.collision(this.player)) 
              { return false 
              } else {return true}
         })   
+
     } 
     gameProgress () {
         // background change based on score
@@ -170,7 +174,7 @@ class Game {
             text("Refresh   to   play   again.",0, 0, 1000, 600);
 
         }
-        if (this.player.score >= 140) {
+        if (this.player.score >= 500) {
             if (this.soundtrack.isPlaying()) {
                 this.soundtrack.stop();
             }
@@ -187,6 +191,7 @@ class Game {
             this.tokens = [];
             this.activeEnemies = [];
             this.activeTrees = [];
+            
             background('pink')
             textSize(50);
             fill('#283747'); 
@@ -203,48 +208,21 @@ class Game {
         image(this.treeLayer.src, this.treeLayer.x, this.treeLayer.y, width, height)
         this.treeLayer.x -= this.treeLayer.speed
         image(this.treeLayer.src, this.treeLayer.x +width, this.treeLayer.y, width, height)
-        if (this.treeLayer.x <= - width) {
-            this.treeLayer.x = 0;
-        }
-
+        if (this.treeLayer.x <= - width)  this.treeLayer.x = 0;
     }
 
-
-
+    // offScreen(arr) {
+    //     arr = arr.filter( item => {
+    //         if(item.x < 0 || item.collision(this.player)) 
+    //          { return false 
+    //          } else {return true}
+    //     })   
+    // }
 }
+    // obstacles () {
+    //   //  tokens
+       
+    // }
 
- 
-
-// obstacles() {
-//     //enemies
-//     if (frameCount % 300 === 0) {
-//         //random enemy (I could do this in enemy class)
-//         let randomEnemyIndex = Math.floor(Math.random() * this.enemyImages.length);
-//         this.enemyImage = this.enemyImages[0]; 
-//         console.log(this.enemyImages)
-//         //enemies currently on screen
-//         this.activeEnemies.push(new Enemy(this.enemyImage)); 
-//     }
-//     this.activeEnemies.forEach(enemy => enemy.draw() );
-
-//      //destroying enemies or enemies running off the screen
-//     this.activeEnemies = this.activeEnemies.filter( enemy => {
-//         if(enemy.x < 0 || enemy.collision(this.player)) 
-//          { return false 
-//          } else {return true}
-//     })   
-//     //tokens
-//     if (frameCount % 200 === 0) {
-//         Math.random() < 0.5 ? 
-//             this.tokens.push(new Token(this.token1Image))
-//             : this.tokens.push(new Token(this.token2Image));  
-//     }
-//     this.tokens.forEach(token => token.draw() ); 
-//     //collecting tokens or tokens running off the screen
-//     this.tokens = this.tokens.filter( token => {
-//         if(token.x < 0 || token.collision(this.player)) 
-//          { return false 
-//          } else { return true}
-//     })
     
-// }
+    

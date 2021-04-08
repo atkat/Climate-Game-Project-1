@@ -1,11 +1,13 @@
 const game = new Game();
 let mode;
 let introFont;
+let introSound;
 //let canvas;
 
 function preload() {
     game.preload();
-    introFont = loadFont('assets/ConnectionBold-ER1g.otf')
+    introFont = loadFont('assets/ConnectionBold-ER1g.otf');
+    introSound = loadSound('assets/sounds/elevator-music.wav')
 }
 
 function setup() {
@@ -19,22 +21,33 @@ function draw() {
     clear()
     if (mode === 0) {
         background('#F77B4D')
-        rect(400,600)
-        fill(0)
+        fill('#F77B4D')
         stroke('#2E4053')
+        strokeWeight(4)
+        rect(22, 110, 470, 325)
+        
+        strokeWeight(1)
         textSize(45)
         fill('#2E4053')
         textFont('ConnectionBold-ER1g')
-        text('Press   ENTER   to   play', 520, 190)
+        
+        textAlign(LEFT)
+        text('Press   ENTER   to   play', 520, 180)
         textSize(40)
+        textAlign(LEFT)
         text('jump:   space  /  up  /  w', 520, 280)
         text('attack:   down  /  s', 520, 340)
         text('move:   <-  /  a  /  ->  /  d ', 520, 400)
 
         textSize(33)
+        textAlign(CENTER)
         fill('#2E4053')
-        text('Collect      renewables   \n\nand   destroy   corporations   \n\nto     save     the        planet.', 30, 170, 470, 600)
-
+        text('Collect      renewables   \n\nand   destroy   corporations   \n\nto     save     the        planet.', 28, 170, 470, 400)
+        
+        //introSound.play();
+        if (!introSound.isPlaying() ) {
+            introSound.play() } 
+        
     }
     if (mode === 1) { 
         game.draw();
