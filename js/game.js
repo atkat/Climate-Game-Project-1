@@ -22,8 +22,8 @@ class Game {
             { src: loadImage('assets/background/sky_background.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
-            { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.25 },
-            { src: loadImage('assets/background/clouds.png'), x: 400, speed: 0.05 },
+            { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.05 },
+            { src: loadImage('assets/background/clouds.png'), x: 400, speed: 0.25 },
             { src: loadImage('assets/background/clouds2.png'), x: 300, speed: 0.75 },
             { src: loadImage('assets/background/clouds.png'), x: 300, speed: 0.1 },
             { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0.2 },
@@ -31,6 +31,7 @@ class Game {
             { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
             //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
         ]
+        
 
         // this.clouds = [
         //     { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
@@ -42,7 +43,8 @@ class Game {
         // ]
         this.decorationImages = [ 
             {src: loadImage('assets/background/skeleton.png'), x: 1000, y: 320, speed: 1, width: 50, height: 60 },
-            {src: loadImage('assets/background/animal-skeleton.png'), x: 1000, y: 550, speed: 1.2,  width: 60, height: 20} 
+            {src: loadImage('assets/background/animal-skeleton.png'), x: 1000, y: 550, speed: 1.2,  width: 60, height: 20},
+            {src: loadImage('assets/background/skeleton.png'), x: 1000, y: 350, speed: 1.5, width: 50, height: 60 }, 
         ]
 
         this.treeImages = [ 
@@ -125,7 +127,6 @@ class Game {
     gameProgress () {
         // background change based on score
         //add trees
-        //clear();
         let treesWon = Math.floor(game.player.score/30)
         if (this.activeTrees.length<treesWon) {
             let randomTree = Math.floor(Math.random() * this.treeImages.length)
@@ -138,28 +139,34 @@ class Game {
             this.activeTrees.pop();
         }
         this.activeTrees.forEach(tree => tree.draw() );
-        //removeClouds
-        // let cloudCount = Math.floor(game.player.score/100)
-        // if (this.clouds.length>cloudCount) {
-        //     let randomCloud = Math.floor(Math.random() * this.clouds.length)
-        //     this.cloudImage = this.treeImages[randomCloud]; 
-        //     this.clouds.pop();
+        //add blue sky
+        // if (this.player.score >200) {
+        //     this.backgroundImages = [
+        //         { src: loadImage('assets/background/blueskies.png'), x: 0, speed: 0 },
+        //         { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
+        //         { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
+        //         { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.05 },
+        //         { src: loadImage('assets/background/clouds.png'), x: 300, speed: 0.1 },
+        //         { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0.2 },
+        //         { src: loadImage('assets/background/mountains.png'), x: 0, speed: 0.5},
+        //         { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
+        //         //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
+        //     ]
         // }
-
-        //remove stuff when score drops
-
-        //add skeletons
-        //add clouds?
+       
     }
 
     end () {
-        if (this.player.score < 0 || this.player.score >= 600) {
-             if (this.soundtrack.isPlaying()) {
+        // if (this.player.score < -40 || this.player.score >= 300) {
+        //      if (this.soundtrack.isPlaying()) {
+        //         this.soundtrack.stop();
+        //     }
+        // }
+      
+        if (this.player.score < -40) {
+            if (this.soundtrack.isPlaying()) {
                 this.soundtrack.stop();
             }
-        }
-      
-        if (this.player.score < 0) {
             if (this.gameOverSoundCounter === 0) {
                 //this.gameOverSound.loop = false;
                 this.gameOverSound.play();
@@ -179,7 +186,10 @@ class Game {
             this.activeTrees = [];
             
         }
-        if (this.player.score >= 200) {
+        if (this.player.score >= 300) {
+            if (this.soundtrack.isPlaying()) {
+                this.soundtrack.stop();
+            }
             if (this.gameOverSoundCounter === 0) {
                 //this.gameOverSound.loop = false;
                 this.winSound.play();
@@ -192,7 +202,7 @@ class Game {
             textSize(50);
             fill('#283747'); 
             textAlign(CENTER, CENTER);
-            text("You've saved us", 0, 0, 1000, 450);
+            text("You've   saved   us", 0, 0, 1000, 450);
             textSize(12);
             textAlign(CENTER,CENTER);
             text("Refresh   to   play   again.", 0, 0, 1000, 600);
@@ -212,7 +222,18 @@ class Game {
 
 }
 
+ //removeClouds
+        // let cloudCount = Math.floor(game.player.score/100)
+        // if (this.clouds.length>cloudCount) {
+        //     let randomCloud = Math.floor(Math.random() * this.clouds.length)
+        //     this.cloudImage = this.treeImages[randomCloud]; 
+        //     this.clouds.pop();
+        // }
 
+        //remove stuff when score drops
+
+        //add skeletons
+        //add clouds?
 
 // obstacles() {
 //     //enemies

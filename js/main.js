@@ -30,7 +30,6 @@ function draw() {
         text('move:  left / right', 550, 400)
         text('attack:  down', 550, 350)
 
-        
         textSize(33)
         fill('#2E4053')
         text('Collect      renewables   \n\nand   destroy   corporations   \n\nto     save     the        planet.', 50, 170, 470, 600)
