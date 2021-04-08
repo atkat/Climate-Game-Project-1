@@ -17,7 +17,6 @@ class Background {
                 img.x = 0;
             }
         })
-        //decoImageration
         
         game.decorationImages.forEach(img => {
             image(img.src, img.x, img.y, img.width, img.height)

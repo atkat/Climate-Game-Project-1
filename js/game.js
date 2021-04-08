@@ -10,7 +10,9 @@ class Game {
     this.plop;
     this.crash;
     this.gameOverSound;
+    this.winSound;
     this.gameOverSoundCounter = 0;
+    this.yetAnotherCounter = 0;
     }
 
     preload () {
@@ -27,6 +29,8 @@ class Game {
             { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
             //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
         ]
+
+        
         this.decorationImages = [ 
             {src: loadImage('assets/background/skeleton.png'), x: 1000, y: 320, speed: 1, width: 50, height: 60 },
             {src: loadImage('assets/background/animal-skeleton.png'), x: 1000, y: 550, speed: 1.2,  width: 60, height: 20} 
@@ -50,12 +54,12 @@ class Game {
             'assets/obstacles/factory1.png'
         ]
         this.enemyImages = this.enemyImagesPaths.map(a=>loadImage(a));
-        
         //sounds
         this.soundtrack = loadSound('assets/sounds/skulls_adventure.mp3');
         this.crash = loadSound('assets/sounds/explosion.wav');
         this.plop = loadSound('assets/sounds/plop.wav');
         this.gameOverSound = loadSound('assets/sounds/gameover.wav');
+        this.winSound = loadSound('assets/sounds/win.wav');
         this.gameOverSound.loop = false; 
     }
 
@@ -69,15 +73,14 @@ class Game {
 
     draw() {
         if (!this.soundtrack.isPlaying() ) {
-          // this.soundtrack.loop = false; 
            this.soundtrack.play() } 
-        this.end();
         clear();
         this.background.draw();
         this.gameProgress();
         //to make the trees appear behind the first layer
         this.showTreeLayer();
         this.player.draw();
+        this.end();
         
         //tokens
         if (frameCount % 300 === 0) {
@@ -119,14 +122,22 @@ class Game {
         if (this.activeTrees.length<treesWon) {
             let randomTree = Math.floor(Math.random() * this.treeImages.length)
             this.treeImage = this.treeImages[randomTree]; 
-             this.activeTrees.push(new Tree(this.treeImage));
+            this.activeTrees.push(new Tree(this.treeImage));
+        }
+        if (this.activeTrees.length>treesWon) {
+            let randomTree = Math.floor(Math.random() * this.treeImages.length)
+            this.treeImage = this.treeImages[randomTree]; 
+            this.activeTrees.pop();
         }
         this.activeTrees.forEach(tree => tree.draw() );
-       
         //removeClouds
-        // if (game.player.score > 100) {
-            
-        // }
+        let cloudCount = Math.floor(game.player.score/100)
+        if (this.activeTrees.length>cloudCount) {
+            let randomTree = Math.floor(Math.random() * this.treeImages.length)
+            this.treeImage = this.treeImages[randomTree]; 
+            this.activeTrees.pop();
+        }
+
         //remove stuff when score drops
         //removeTrees
         //  this.activeTrees = this.activeTrees.filter( tree => {
@@ -140,21 +151,23 @@ class Game {
     }
 
     end () {
-        if (this.player.score > 20) {
-            if (this.soundtrack.isPlaying())
-                {this.soundtrack.pause();
+        if (this.player.score < 0 || this.player.score >= 100) {
+             if (this.soundtrack.isPlaying()) {
+                this.soundtrack.stop();
             }
+        }
+      
+        if (this.player.score < 0) {
             if (this.gameOverSoundCounter === 0) {
                 //this.gameOverSound.loop = false;
                 this.gameOverSound.play();
                 this.gameOverSoundCounter++
             } //else { this.gameOverSound.pause() }
-          
             background('black')
             textSize(50);
             fill('pink'); 
             textAlign(CENTER, CENTER);
-            text("Game Over",0, 0, 1000, 500);
+            text("Game Over",0, 0, 1000, 450);
             textSize(12);
             textAlign(CENTER,CENTER);
             text("Refresh to play again.",0, 0, 1000, 600);
@@ -164,16 +177,21 @@ class Game {
             this.activeTrees = [];
             
         }
-        if (this.player.score >= 300) {
+        if (this.player.score >= 100) {
+            if (this.gameOverSoundCounter === 0) {
+                //this.gameOverSound.loop = false;
+                this.winSound.play();
+                this.gameOverSoundCounter++
+            } //else { this.gameOverSound.pause() }
             this.tokens = [];
             this.activeEnemies = [];
             this.activeTrees = [];
             background('pink')
             textSize(50);
-            textAlign(CENTER, CENTER);
-            text("You've saved us", 0, 0, 1000, 500);
-            textSize(12);
             fill('#283747'); 
+            textAlign(CENTER, CENTER);
+            text("You've saved us", 0, 0, 1000, 450);
+            textSize(12);
             textAlign(CENTER,CENTER);
             text("Refresh to play again.", 0, 0, 1000, 600);
             fill('#283747');

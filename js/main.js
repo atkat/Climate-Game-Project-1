@@ -9,7 +9,9 @@ function setup() {
     game.setup();
 }
 
+
 function draw() {
+   // document.getElementById('loading').style.display = "block";
     game.draw();
 }
 
@@ -23,3 +25,10 @@ function keyPressed() {
         game.player.land();
     }        
 }
+
+// <div>
+// <img id="loading" src="https://venturebeat.com/wp-content/uploads/2014/10/loading_desktop_by_brianmccumber-d41z4h6.gif?resize=1200%2C600&strip=all" alt="Loading">
+// </div>
+{/* <div id="loading"></div>
+<div id="game"></div>
+<div id="end"></div> */}

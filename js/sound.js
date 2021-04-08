@@ -10162,10 +10162,11 @@ var __WEBPACK_AMD_DEFINE_RESULT__;
   */
 
 
- p5.Part.prototype.stop = function (time) {
-   this.partStep = 0;
-   this.pause(time);
- };
+  p5.Part.prototype.stop = function (time) {
+    this.partStep = 0;
+    this.metro.metroTicks = 0;
+    this.pause(time);
+    };
  /**
   *  Pause the part. Playback will resume
   *  from the current step.
