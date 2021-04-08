@@ -62,7 +62,7 @@ class Player {
         //     this.x -= 1.5*this.speed; 
         //     return true;
         // }
-        if (keyIsDown(37)) {    
+        if (keyIsDown(37) || keyIsDown(65)) {    
             this.x -= this.speed; 
         } 
         //right
@@ -70,11 +70,11 @@ class Player {
         //     this.x += 1.5*this.speed; 
         //     return true
         // }
-        if (keyIsDown(39)) {     // && this.x > >= width - this.width
+        if (keyIsDown(39) || keyIsDown(68)) {     // && this.x > >= width - this.width
             this.x += this.speed; 
         }
         // down 
-        if (keyIsDown(40) && game.activeEnemies.length >= 0) {    //&& this.x > 0
+        if (keyIsDown(40) || keyIsDown(83) ) {    //&& this.x > 0
             this.y += 1.5*this.speed; 
             return true
         }

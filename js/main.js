@@ -1,6 +1,7 @@
 const game = new Game();
 let mode;
 let introFont;
+//let canvas;
 
 function preload() {
     game.preload();
@@ -9,7 +10,8 @@ function preload() {
 
 function setup() {
     mode = 0;
-    createCanvas(1000, 600)
+   createCanvas(1000, 600);
+   
     game.setup();
 }
 
@@ -22,17 +24,18 @@ function draw() {
         rect(400,600)
         fill(0)
         stroke('#2E4053')
-        textSize(40)
+        textSize(45)
         fill('#2E4053')
         textFont('ConnectionBold-ER1g')
-        text('Press   ENTER   to   play', 550, 200)
-        text('jump:  space  or  up', 550, 300)
-        text('move:  left / right', 550, 400)
-        text('attack:  down', 550, 350)
+        text('Press   ENTER   to   play', 520, 190)
+        textSize(40)
+        text('jump:   space  /  up  /  w', 520, 280)
+        text('attack:   down  /  s', 520, 340)
+        text('move:   <-  /  a  /  ->  /  d ', 520, 400)
 
         textSize(33)
         fill('#2E4053')
-        text('Collect      renewables   \n\nand   destroy   corporations   \n\nto     save     the        planet.', 50, 170, 470, 600)
+        text('Collect      renewables   \n\nand   destroy   corporations   \n\nto     save     the        planet.', 30, 170, 470, 600)
 
     }
     if (mode === 1) { 
@@ -45,11 +48,11 @@ function keyPressed() {
         mode = 1;
     }
     // spacebar or arrow up makes the player jump
-    if (keyCode === 32 || keyCode === 38) {
+    if (keyCode === 32 || keyCode === 38 || keyCode === 87) {
         game.player.jump();
     }
     // accelerated landing on arrow down 
-    if (keyCode === 40) {
+    if (keyCode === 40 || keyCode === 83) {
         game.player.land();
     }        
 }

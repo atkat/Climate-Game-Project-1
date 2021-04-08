@@ -7,8 +7,6 @@ class Background {
     draw() {
         //draw background
         this.background(game.backgroundImages);
-        // draw clouds
-        //this.background(game.clouds);
         
         game.decorationImages.forEach(img => {
             image(img.src, img.x, img.y, img.width, img.height)
@@ -24,12 +22,10 @@ class Background {
             image(this.decoImage.src, this.decoImage.x, this.decoImage.y, this.decoImage.width, this.decoImage.height)
             this.decoImage.x -= this.decoImage.speed;
         }
-  
     }
     //for loading background and images
     background (arr) {
         arr.forEach(img => {
-            console.log(img)
             img.x -= img.speed;
             image(img.src, img.x, 0, width, height)
             // this adds a second image

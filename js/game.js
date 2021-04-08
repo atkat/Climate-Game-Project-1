@@ -15,10 +15,15 @@ class Game {
     this.gameOverSoundCounter = 0;
     this.yetAnotherCounter = 0;
     this.mode = 0;
+    this.beforeHundred;
+    this.afterHundred;
+
     }
 
     preload () {
-        this.backgroundImages = [
+        this.backgroundImages = [];
+
+        this.beforeHundred = [
             { src: loadImage('assets/background/sky_background.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
@@ -31,16 +36,17 @@ class Game {
             { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
             //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
         ]
-        
 
-        // this.clouds = [
-        //     { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
-        //     { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.25 },
-        //     { src: loadImage('assets/background/clouds.png'), x: 400, speed: 0.05 },
-        //     { src: loadImage('assets/background/clouds2.png'), x: 300, speed: 0.75 },
-        //     { src: loadImage('assets/background/clouds.png'), x: 300, speed: 0.1 },
-        //     { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0.2 }
-        // ]
+        this.afterHundred = [
+            { src: loadImage('assets/background/blueskies.png'), x: 0, speed: 0 },
+            { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
+            { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
+            { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.05 },
+            { src: loadImage('assets/background/mountains.png'), x: 0, speed: 0.5},
+            { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
+            //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
+        ]
+
         this.decorationImages = [ 
             {src: loadImage('assets/background/skeleton.png'), x: 1000, y: 320, speed: 1, width: 50, height: 60 },
             {src: loadImage('assets/background/animal-skeleton.png'), x: 1000, y: 550, speed: 1.2,  width: 60, height: 20},
@@ -80,6 +86,8 @@ class Game {
         this.tokens = [];
         this.activeEnemies = [];
         this.activeTrees = [];
+        this.backgroundImages = this.beforeHundred;
+
     }
 
     draw() {
@@ -108,7 +116,7 @@ class Game {
         })
 
         //enemies
-        if (frameCount % 300 === 0) {
+        if (frameCount % 260 === 0) {
             //random enemy (I could do this in enemy class)
             let randomEnemyIndex = Math.floor(Math.random() * this.enemyImages.length)
             this.enemyImage = this.enemyImages[randomEnemyIndex]; 
@@ -116,7 +124,6 @@ class Game {
             this.activeEnemies.push(new Enemy(this.enemyImage)); 
         }
         this.activeEnemies.forEach(enemy => enemy.draw() );
-
          //destroying enemies or enemies running off the screen
         this.activeEnemies = this.activeEnemies.filter( enemy => {
             if(enemy.x < 0 || enemy.collision(this.player)) 
@@ -140,28 +147,13 @@ class Game {
         }
         this.activeTrees.forEach(tree => tree.draw() );
         //add blue sky
-        // if (this.player.score >200) {
-        //     this.backgroundImages = [
-        //         { src: loadImage('assets/background/blueskies.png'), x: 0, speed: 0 },
-        //         { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
-        //         { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
-        //         { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.05 },
-        //         { src: loadImage('assets/background/clouds.png'), x: 300, speed: 0.1 },
-        //         { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0.2 },
-        //         { src: loadImage('assets/background/mountains.png'), x: 0, speed: 0.5},
-        //         { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
-        //         //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
-        //     ]
-        // }
+        this.player.score >100 ?  this.backgroundImages = this.afterHundred : this.backgroundImages = this.beforeHundred
+            
+        
        
     }
 
     end () {
-        // if (this.player.score < -40 || this.player.score >= 300) {
-        //      if (this.soundtrack.isPlaying()) {
-        //         this.soundtrack.stop();
-        //     }
-        // }
       
         if (this.player.score < -40) {
             if (this.soundtrack.isPlaying()) {
@@ -220,6 +212,8 @@ class Game {
 
     }
 
+
+
 }
 
  //removeClouds
@@ -230,7 +224,7 @@ class Game {
         //     this.clouds.pop();
         // }
 
-        //remove stuff when score drops
+        //
 
         //add skeletons
         //add clouds?
