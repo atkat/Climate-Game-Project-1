@@ -7,6 +7,7 @@ class Game {
     this.token1Image;
     this.token2Image;
     this.enemyImages;
+    this.oil;
     this.soundtrack;
     this.plop;
     this.crash;
@@ -52,7 +53,7 @@ class Game {
         this.treeImages = [ 
              {src: loadImage('assets/obstacles/chestnut-001.png'), y: 300, speed: 0.7 },
              {src: loadImage('assets/obstacles/chestnut-002.png'), y: 260, speed: 1 },
-             {src: loadImage('assets/obstacles/trreez.png'), y: 380, speed: 0.7 },
+             {src: loadImage('assets/obstacles/trreez.png'), y: 280, speed: 0.7 },
              {src: loadImage('assets/obstacles/trreez.png'), y: 330, speed: 1 }
         ]
         this.treeLayer = {src: loadImage('assets/background/layer2.png'), x: 0, y:0, speed: 1.5 };
@@ -67,6 +68,8 @@ class Game {
             'assets/obstacles/factory1.png'
         ]
         this.enemyImages = this.enemyImagesPaths.map(a=>loadImage(a));
+        this.oil = loadImage('assets/obstacles/oil-spill.png');
+
         //sounds
         this.soundtrack = loadSound('assets/sounds/skulls_adventure.mp3');
         this.crash = loadSound('assets/sounds/explosion.wav');
@@ -82,10 +85,12 @@ class Game {
         this.tokens = [];
         this.activeEnemies = [];
         this.activeTrees = [];
+        this.activeOil = [];
         this.backgroundImages = this.beforeHundred;
     }
 
     draw() {
+        this.soundtrack.setVolume(2);
         if (!this.soundtrack.isPlaying() ) {
            this.soundtrack.play() } 
         clear();
@@ -109,29 +114,39 @@ class Game {
              { return false 
              } else { return true}
         })
-
         //enemies
-        if (frameCount % 230 === 0) {
-            //random enemy (I could do this in enemy class)
+        if (frameCount % 220 === 0) {
+            //random enemy (I could do this in enemy class??)
             let randomEnemyIndex = Math.floor(Math.random() * this.enemyImages.length)
             this.enemyImage = this.enemyImages[randomEnemyIndex]; 
             //enemies currently on screen
             this.activeEnemies.push(new Enemy(this.enemyImage)); 
         }
         this.activeEnemies.forEach(enemy => enemy.draw() );
-         //collisions or enemies running off the screen
+         //collisions happening or enemies running off the screen
         //this.offScreen(this.activeEnemies)
         this.activeEnemies = this.activeEnemies.filter( enemy => {
             if(enemy.x < 0 || enemy.collision(this.player)) 
              { return false 
              } else {return true}
-        })   
-
+        }) 
+        //oil spills
+        if (frameCount % 573 === 0) {
+            this.activeOil.push(new Oil(this.oil));
+        }
+        console.log(this.activeOil);
+        this.activeOil.forEach(oil =>  oil.draw());
+        
+       this.activeOil.forEach(oil => oil.collision(this.player) );
+        this.activeOil = this.activeOil.filter( oil => 
+             oil.x < 0 ? false : true
+            )
     } 
+
     gameProgress () {
         // background change based on score
         //add and remove trees
-        let treesWon = Math.floor(game.player.score/30)
+        let treesWon = Math.floor(game.player.score/20)
         if (this.activeTrees.length<treesWon) {
             let randomTree = Math.floor(Math.random() * this.treeImages.length)
             this.treeImage = this.treeImages[randomTree]; 
@@ -168,12 +183,12 @@ class Game {
             fill('pink'); 
             textAlign(CENTER, CENTER);
             text("Game Over",0, 0, 1000, 450);
-            textSize(12);
+            textSize(20);
             textAlign(CENTER,CENTER);
             text("Refresh   to   play   again.",0, 0, 1000, 600);
 
         }
-        if (this.player.score >= 500) {
+        if (this.player.score >= 550) {
             if (this.soundtrack.isPlaying()) {
                 this.soundtrack.stop();
             }
@@ -196,7 +211,7 @@ class Game {
             fill('#283747'); 
             textAlign(CENTER, CENTER);
             text("You've   saved   us", 0, 0, 1000, 450);
-            textSize(12);
+            textSize(20);
             textAlign(CENTER,CENTER);
             text("Refresh   to   play   again.", 0, 0, 1000, 600);
             fill('#283747');

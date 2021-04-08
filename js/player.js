@@ -14,7 +14,6 @@ class Player {
     }
 
     draw() {
-        //console.log('this is the player drawing')
         // the gravity pushes the player down
         this.velocity += this.gravity
         this.y += this.velocity;
@@ -58,18 +57,10 @@ class Player {
 
     go(keyCode) { //moving and attacking
         //left
-        // if (keyIsDown(37) && game.activeEnemies.length >= 0) {    //&& this.x > 0
-        //     this.x -= 1.5*this.speed; 
-        //     return true;
-        // }
         if (keyIsDown(37) || keyIsDown(65)) {    
             this.x -= this.speed; 
         } 
         //right
-        // if (keyIsDown(39) && game.activeEnemies.length >= 0) {    //&& this.x > 0
-        //     this.x += 1.5*this.speed; 
-        //     return true
-        // }
         if (keyIsDown(39) || keyIsDown(68)) {     // && this.x > >= width - this.width
             this.x += this.speed; 
         }
@@ -81,7 +72,6 @@ class Player {
         if (keyIsDown(40)) {
             this.y += this.speed; 
         }
-
     }   
     
 }

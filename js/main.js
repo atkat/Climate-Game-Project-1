@@ -1,12 +1,14 @@
 const game = new Game();
 let mode;
 let introFont;
+let introFont2;
 let introSound;
 //let canvas;
 
 function preload() {
     game.preload();
     introFont = loadFont('assets/ConnectionBold-ER1g.otf');
+    introFont2 = loadFont('assets/Connection-arMJ.otf');
     introSound = loadSound('assets/sounds/elevator-music.wav')
 }
 
@@ -17,9 +19,12 @@ function setup() {
 }
 
 function draw() {
-    //document.getElementById('loading').style.display = "block";
-    clear()
+    clear();
     if (mode === 0) {
+        //introSound.play();
+        if (!introSound.isPlaying() ) {
+            introSound.play() } 
+
         background('#F77B4D')
         fill('#F77B4D')
         stroke('#2E4053')
@@ -42,11 +47,13 @@ function draw() {
         textSize(33)
         textAlign(CENTER)
         fill('#2E4053')
-        text('Collect      renewables   \n\nand   destroy   corporations   \n\nto     save     the        planet.', 28, 170, 470, 400)
+        text('Collect      renewables   \n\nand   destroy   corporations   \n\nto     save     the        planet.', 
+        28, 160, 470, 400)
+        textSize(17)
+        textAlign(CENTER)
+        textFont('Connection-arMJ')
+        text('Avoid the oil spills!!!', 28, 400, 470, 400)
         
-        //introSound.play();
-        if (!introSound.isPlaying() ) {
-            introSound.play() } 
         
     }
     if (mode === 1) { 
@@ -69,4 +76,3 @@ function keyPressed() {
         game.player.land();
     }        
 }
-
