@@ -19,13 +19,22 @@ function draw() {
     clear()
     if (mode === 0) {
         background('#F77B4D')
-        textSize(35)
+        rect(400,600)
+        fill(0)
+        stroke('#2E4053')
+        textSize(40)
         fill('#2E4053')
         textFont('ConnectionBold-ER1g')
-        text('Press   ENTER   to   start', 200, 200)
-        text('jump:  space  or  up', 200, 300)
-        text('move:  left / right', 200, 400)
-        text('attack:  down', 200, 350)
+        text('Press   ENTER   to   play', 550, 200)
+        text('jump:  space  or  up', 550, 300)
+        text('move:  left / right', 550, 400)
+        text('attack:  down', 550, 350)
+
+        
+        textSize(33)
+        fill('#2E4053')
+        text('Collect      renewables   \n\nand   destroy   corporations   \n\nto     save     the        planet.', 50, 170, 470, 600)
+
     }
     if (mode === 1) { 
         game.draw();
@@ -46,7 +55,3 @@ function keyPressed() {
     }        
 }
 
-
-/* <div id="loading"></div>
-<div id="game"></div>
-<div id="end"></div> */

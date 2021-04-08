@@ -172,7 +172,7 @@ class Game {
             text("Game Over",0, 0, 1000, 450);
             textSize(12);
             textAlign(CENTER,CENTER);
-            text("Refresh to play again.",0, 0, 1000, 600);
+            text("Refresh   to   play   again.",0, 0, 1000, 600);
 
             this.tokens = [];
             this.activeEnemies = [];
@@ -195,7 +195,7 @@ class Game {
             text("You've saved us", 0, 0, 1000, 450);
             textSize(12);
             textAlign(CENTER,CENTER);
-            text("Refresh to play again.", 0, 0, 1000, 600);
+            text("Refresh   to   play   again.", 0, 0, 1000, 600);
             fill('#283747');
         }
      }
@@ -210,11 +210,6 @@ class Game {
 
     }
 
-    // loading () {
-    //     if(this.mode===0) {
-
-    //     }
-    // }
 }
 
 
