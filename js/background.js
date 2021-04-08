@@ -8,12 +8,11 @@ class Background {
         //draw background
         this.background(game.backgroundImages);
         // draw clouds
-        this.background(game.clouds);
+        //this.background(game.clouds);
         
         game.decorationImages.forEach(img => {
             image(img.src, img.x, img.y, img.width, img.height)
             img.x -= img.speed;
-
             if (img.x === - img.width) {
                 img.x = 999;
             }
@@ -30,6 +29,7 @@ class Background {
     //for loading background and images
     background (arr) {
         arr.forEach(img => {
+            console.log(img)
             img.x -= img.speed;
             image(img.src, img.x, 0, width, height)
             // this adds a second image

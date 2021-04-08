@@ -38,11 +38,11 @@ class Player {
         this.go(keyCode); 
 
         //score
-        this.scoreStr = "Score: " + this.score;
+        this.scoreStr = "SCORE:  " + this.score;
         textSize(55);
         textFont('ConnectionBold-ER1g')
         text(this.scoreStr, 10, 25, 300, 300);
-        fill('#283747');   
+        fill('#172D42');   
         textStyle(BOLD);
     }
 

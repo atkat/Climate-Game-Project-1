@@ -21,19 +21,25 @@ class Game {
         this.backgroundImages = [
             { src: loadImage('assets/background/sky_background.png'), x: 0, speed: 0 },
             { src: loadImage('assets/background/sun.png'), x: 0, speed: 0 },
-            { src: loadImage('assets/background/mountains.png'), x: 0, speed: 0.5},
-            { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
-            //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
-        ]
-
-        this.clouds = [
             { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
             { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.25 },
             { src: loadImage('assets/background/clouds.png'), x: 400, speed: 0.05 },
             { src: loadImage('assets/background/clouds2.png'), x: 300, speed: 0.75 },
             { src: loadImage('assets/background/clouds.png'), x: 300, speed: 0.1 },
-            { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0.2 }
+            { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0.2 },
+            { src: loadImage('assets/background/mountains.png'), x: 0, speed: 0.5},
+            { src: loadImage('assets/background/layer3.png'), x: 0, speed: 1 },
+            //{ src: loadImage('assets/background/layer2.png'), x: 0, speed: 1.5 }
         ]
+
+        // this.clouds = [
+        //     { src: loadImage('assets/background/clouds.png'), x: 200, speed: 0.05 },
+        //     { src: loadImage('assets/background/clouds2.png'), x: 500, speed: 0.25 },
+        //     { src: loadImage('assets/background/clouds.png'), x: 400, speed: 0.05 },
+        //     { src: loadImage('assets/background/clouds2.png'), x: 300, speed: 0.75 },
+        //     { src: loadImage('assets/background/clouds.png'), x: 300, speed: 0.1 },
+        //     { src: loadImage('assets/background/clouds2.png'), x: 0, speed: 0.2 }
+        // ]
         this.decorationImages = [ 
             {src: loadImage('assets/background/skeleton.png'), x: 1000, y: 320, speed: 1, width: 50, height: 60 },
             {src: loadImage('assets/background/animal-skeleton.png'), x: 1000, y: 550, speed: 1.2,  width: 60, height: 20} 
@@ -116,8 +122,6 @@ class Game {
              } else {return true}
         })   
     } 
-   
-
     gameProgress () {
         // background change based on score
         //add trees
@@ -135,27 +139,21 @@ class Game {
         }
         this.activeTrees.forEach(tree => tree.draw() );
         //removeClouds
-        let cloudCount = Math.floor(game.player.score/100)
-        if (this.clouds.length>cloudCount) {
-            let randomCloud = Math.floor(Math.random() * this.clouds.length)
-            this.cloudImage = this.treeImages[randomCloud]; 
-            this.clouds.pop();
-        }
+        // let cloudCount = Math.floor(game.player.score/100)
+        // if (this.clouds.length>cloudCount) {
+        //     let randomCloud = Math.floor(Math.random() * this.clouds.length)
+        //     this.cloudImage = this.treeImages[randomCloud]; 
+        //     this.clouds.pop();
+        // }
 
         //remove stuff when score drops
-        //removeTrees
-        //  this.activeTrees = this.activeTrees.filter( tree => {
-        //     if(this.player.score < 70) 
-        //      { return false 
-        //      } else {return true}
-        // })
 
         //add skeletons
         //add clouds?
     }
 
     end () {
-        if (this.player.score < 0 || this.player.score >= 200) {
+        if (this.player.score < 0 || this.player.score >= 600) {
              if (this.soundtrack.isPlaying()) {
                 this.soundtrack.stop();
             }
