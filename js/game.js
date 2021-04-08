@@ -208,6 +208,7 @@ class Game {
             this.tokens = [];
             this.activeEnemies = [];
             this.activeTrees = [];
+            this.activeOil =[];
             
             background('pink')
             textFont('Connection-arMJ')
