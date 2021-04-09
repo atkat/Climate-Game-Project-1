@@ -29,7 +29,9 @@ function draw() {
         fill('#F77B4D')
         stroke('#2E4053')
         strokeWeight(4)
-        rect(22, 110, 470, 325)
+        rect(22, 160, 470, 350)
+
+        
         
         strokeWeight(1)
         textSize(45)
@@ -37,22 +39,23 @@ function draw() {
         textFont('ConnectionBold-ER1g')
         
         textAlign(LEFT)
-        text('Press   ENTER   to   play', 520, 180)
+        text('Iorik   Saves   the   World', 250, 50, 600, 100)
+        text('Press   ENTER   to   play', 520, 230)
         textSize(40)
         textAlign(LEFT)
-        text('jump:   space  /  w  /  ↑', 520, 280)
-        text('attack:    s   /   ↓', 520, 340)
-        text('move:   a  /  ←   /  →  /  d ', 520, 400)
+        text('jump:   space  /  w  /  ↑', 520, 330)
+        text('attack:    s   /   ↓', 520, 390)
+        text('move:   a  /  ←   /  →  /  d ', 520, 450)
 
         textSize(33)
         textAlign(CENTER)
         fill('#2E4053')
         text('Collect      renewables   \n\nand   destroy   corporations   \n\nto     save     the        planet.', 
-        28, 160, 470, 400)
+        28, 210, 470, 400)
         textSize(17)
         textAlign(CENTER)
         textFont('Connection-arMJ')
-        text('Avoid the oil spills!!!', 28, 400, 470, 400)
+        text('Avoid the oil spills!!!', 28, 450, 470, 400)
         
         
     }
