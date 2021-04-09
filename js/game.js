@@ -90,7 +90,7 @@ class Game {
     }
 
     draw() {
-        this.soundtrack.setVolume(2);
+        this.soundtrack.setVolume(3);
         if (!this.soundtrack.isPlaying() ) {
            this.soundtrack.play() } 
         clear();

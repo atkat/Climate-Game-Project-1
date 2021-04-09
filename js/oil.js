@@ -16,7 +16,7 @@ class Oil {
         const playerX = playerInfo.x + playerInfo.width / 2;
         const playerY = playerInfo.y + playerInfo.height / 2;
         // then use the p5 function dist() to calculate the distance
-        if (dist(oilX, oilY, playerX, playerY) < 20)  {
+        if (dist(oilX, oilY, playerX, playerY) < 30)  {
             game.player.score = -50
         }   
     }
