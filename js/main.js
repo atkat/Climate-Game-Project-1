@@ -40,9 +40,9 @@ function draw() {
         text('Press   ENTER   to   play', 520, 180)
         textSize(40)
         textAlign(LEFT)
-        text('jump:   space  /  up  /  w', 520, 280)
-        text('attack:   down  /  s', 520, 340)
-        text('move:   <-  /  a  /  ->  /  d ', 520, 400)
+        text('jump:   space  /  w  /  ↑', 520, 280)
+        text('attack:    s   /   ↓', 520, 340)
+        text('move:   a  /  ←   /  →  /  d ', 520, 400)
 
         textSize(33)
         textAlign(CENTER)
