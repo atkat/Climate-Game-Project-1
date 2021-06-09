@@ -190,7 +190,7 @@ class Game {
             text("Refresh   to   play   again.",0, 0, 1000, 600);
 
         }
-        if (this.player.score >= 550) {
+        if (this.player.score >= 650) {
             if (this.soundtrack.isPlaying()) {
                 this.soundtrack.stop();
             }
