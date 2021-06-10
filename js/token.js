@@ -20,7 +20,7 @@ class Token {
         } else {
             // we have a collision
             game.plop.play();
-            game.player.score += 20;
+            game.player.score += 35;
             return true;
         }
     }
