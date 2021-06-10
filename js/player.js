@@ -4,7 +4,7 @@ class Player {
         this.score = 0;
         this.gravity = 1;
         this.velocity = 4;
-        this.speed = 20;
+        this.speed = 16;
         this.acceleration = 20;
         this.width = 160;
         this.height = 140;
@@ -73,7 +73,7 @@ class Player {
             this.y += -20;
         }
         if (keyIsDown(40)) {
-            this.y += this.speed; 
+            this.y += this.speed+4; 
         }
     }   
     
